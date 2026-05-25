@@ -1,417 +1,182 @@
-// blog data and rendering
-const articles = [
-  {
-    title: "From Curiosity to Code: My Journey into Computer Science",
-    excerpt:
-      "How I shifted from B.Sc. Agriculture to Computer Science and discovered my passion for development.",
-    category: "Journey",
-    readTime: "5 min read",
-    color: "linear-gradient(to right,#3b82f6,#06b6d4)",
-    content: `🚀 The Beginning
-
-• Initially planned to pursue B.Sc. Agriculture  
-• Had curiosity about computers and technology  
-• Took a bold decision to switch to Computer Science  
-
-💡 First Exposure to Coding
-
-• Learned basics of programming  
-• Started with HTML, CSS, JavaScript  
-• Built small projects and experiments  
-
-🎯 Turning Point
-
-• Realized I enjoy building user interfaces  
-• Got interested in frontend development  
-• Started learning React and modern tools  
-
-📈 Growth
-
-• Built real-world projects  
-• Improved problem-solving mindset  
-• Focused on clean UI and user experience  
-
-🔥 Conclusion
-
-This journey taught me that following curiosity leads to the right career path.`,
-  },
-
-  {
-    title: "Beyond HTML, CSS & JavaScript: Learning Modern Frontend",
-    excerpt:
-      "How I moved from basics to React, Next.js and scalable frontend development.",
-    category: "Frontend",
-    readTime: "6 min read",
-    color: "linear-gradient(to right,#8b5cf6,#ec4899)",
-    content: `🚀 Starting with Basics
-
-• Learned HTML, CSS, JavaScript fundamentals  
-• Built static websites  
-
-⚡ Problem Faced
-
-• Code was hard to manage  
-• No scalability  
-• Repetitive code  
-
-💡 Solution → Modern Frameworks
-
-• Started learning React  
-• Understood component-based architecture  
-• Improved code reusability  
-
-🔥 Next Level → Next.js
-
-• Routing system  
-• Performance optimization  
-• Server-side rendering  
-
-📈 Outcome
-
-• Cleaner code structure  
-• Faster development  
-• Professional-level projects  
-
-🎯 Key Learning
-
-Modern tools are essential for scalable frontend development.`,
-  },
-
-  {
-    title: "Finding Insights in Data: Building the SN Corporation Dashboard",
-    excerpt:
-      "My experience building a data-driven dashboard and extracting meaningful insights.",
-    category: "Data & Analytics",
-    readTime: "5 min read",
-    color: "linear-gradient(to right,#10b981,#22c55e)",
-    content: `📊 Why Data Matters
-
-• Data helps in decision making  
-• Visualization makes it understandable  
-
-🚀 Project Overview
-
-• Built dashboard for SN Corporation  
-• Focused on real-time insights  
-
-⚙️ What I Did
-
-• Data structuring  
-• UI for charts and graphs  
-• Clean dashboard layout  
-
-📈 Key Features
-
-• Visual representation of data  
-• Easy-to-understand UI  
-• Better business insights  
-
-💡 Learning
-
-Working with data improved my analytical thinking.`,
-  },
-
-  {
-    title: "Why I Chose TypeScript and Next.js for Mayra Salon Academy",
-    excerpt:
-      "Understanding why TypeScript + Next.js is better for real-world projects.",
-    category: "Tech Decisions",
-    readTime: "7 min read",
-    color: "linear-gradient(to right,#f97316,#ef4444)",
-    content: `⚡ Problem with JavaScript
-
-• No type safety  
-• Hard to manage large projects  
-
-💡 Why TypeScript
-
-• Type safety  
-• Better debugging  
-• Cleaner code  
-
-🚀 Why Next.js
-
-• File-based routing  
-• SEO optimization  
-• Performance benefits  
-
-📈 Result
-
-• More scalable code  
-• Better maintainability  
-• Professional architecture  
-
-🎯 Final Thought
-
-Choosing the right tech stack is crucial for long-term projects.`,
-  },
-
-  {
-    title: "My Final Year Project: Face Recognition Attendance System",
-    excerpt: "Building an AI-based attendance system using computer vision.",
-    category: "AI & Data",
-    readTime: "6 min read",
-    color: "linear-gradient(to right,#8b5cf6,#ec4899)",
-    content: `🤖 Project Idea
-
-• Automate attendance system  
-• Reduce manual effort  
-
-⚙️ Technologies Used
-
-• Python  
-• OpenCV  
-• Machine Learning  
-
-🚀 Features
-
-• Face detection  
-• Attendance logging  
-• Accuracy optimization  
-
-📈 Challenges
-
-• Lighting conditions  
-• Face recognition accuracy  
-
-💡 Outcome
-
-• Learned practical AI implementation  
-• Improved problem-solving skills`,
-  },
-
-  {
-    title: "Exploring AI Tools with React",
-    excerpt: "Building an AI-powered frontend tool with API integration.",
-    category: "Frontend",
-    readTime: "4 min read",
-    color: "linear-gradient(to right,#f97316,#ef4444)",
-    content: `🚀 Goal
-
-• Build AI-based tool using React  
-
-⚙️ Implementation
-
-• Integrated AI APIs  
-• Designed clean UI  
-
-💡 Focus
-
-• User experience  
-• Fast responses  
-• Clean layout  
-
-📈 Result
-
-• Functional AI tool  
-• Improved frontend + API skills  
-
-🔥 Learning
-
-Combining AI + frontend creates powerful applications.`,
-  },
-
-  {
-    title: "Developing a Real-Time Chat Application as a Student",
-    excerpt: "Building a full-stack chat app using Socket.IO.",
-    category: "Projects",
-    readTime: "5 min read",
-    color: "linear-gradient(to right,#10b981,#22c55e)",
-    content: `💬 Project Goal
-
-• Build real-time chat system  
-
-⚙️ Tech Stack
-
-• React  
-• Node.js  
-• Socket.IO  
-• MongoDB  
-
-🚀 Features
-
-• Live messaging  
-• User authentication  
-• Responsive UI  
-
-📈 Challenges
-
-• Real-time sync  
-• Socket handling  
-
-💡 Learning
-
-• Understood real-time systems  
-• Backend + frontend integration`,
-  },
-];
-let visible = 3;
-
-const grid = document.getElementById("blogGrid");
-const btn = document.getElementById("blogToggleBtn");
-
-function render() {
-  grid.innerHTML = "";
-  articles.slice(0, visible).forEach((a) => {
-    const card = document.createElement("div");
-    card.className = "blog-card";
-    card.innerHTML = `
-      <div class="blog-top" style="background:${a.color}"></div>
-      <div class="blog-content">
-        <div class="blog-meta">
-          <span class="blog-category">${a.category}</span>
-          <span class="blog-read">${a.readTime}</span>
-        </div>
-        <div class="blog-title">${a.title}</div>
-        <div class="blog-desc">${a.excerpt}</div>
-        <div class="blog-readmore">Read →</div>
-      </div>
-    `;
-    card.onclick = () => openModal(a);
-    grid.appendChild(card);
+// ════════════════════════════════════════
+// CASE STUDIES EXPAND SYSTEM
+// Purpose:
+// Opens one case study at a time
+// Adds active class
+// Triggers progress animation
+// ════════════════════════════════════════
+
+const caseCards = document.querySelectorAll(".case-card");
+
+caseCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    caseCards.forEach((c) => {
+      c.classList.remove("active");
+    });
+
+    card.classList.add("active");
   });
-}
+});
 
-btn.onclick = () => {
-  if (visible < articles.length) {
-    visible += 3;
+// ════════════════════════════════════════
+// CASE STUDY AUTO ACTIVATION
+// Purpose:
+// Activates card automatically
+// while scrolling into view
+// Gives real-time living feel
+// ════════════════════════════════════════
 
-    if (visible >= articles.length) {
-      btn.innerText = "Show Less";
-    }
-  } else {
-    visible = 3;
-    btn.innerText = "View More Articles";
-  }
+const caseObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  },
 
-  render();
-};
+  {
+    threshold: 0.5,
+  },
+);
 
-function openModal(a) {
-  const modal = document.getElementById("blogModal");
-  modal.classList.add("active");
+caseCards.forEach((card) => {
+  caseObserver.observe(card);
+});
+/* CONTACT FORM SUBMIT */
 
-  document.querySelector(".modal-header").style.background = a.color;
-  document.getElementById("modalTitle").innerText = a.title;
-  document.getElementById("modalCategory").innerText = a.category;
-  document.getElementById("modalReadTime").innerText = a.readTime;
-  document.getElementById("modalContent").innerText = a.content;
-}
+const form=document.getElementById("contact-form");
 
-document.querySelector(".close-btn").onclick = () => {
-  document.getElementById("blogModal").classList.remove("active");
-};
+form.addEventListener("submit",(e)=>{
 
-document.querySelector(".blog-modal-bg").onclick = () => {
-  document.getElementById("blogModal").classList.remove("active");
-};
+e.preventDefault();
 
-render();
-// whatapp and email links to submit button in contact form
+const name=
+document.getElementById("name").value;
 
-document
-  .getElementById("contact-form")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
+const email=
+document.getElementById("email").value;
 
-    // Get values
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const subject = document.getElementById("subject").value.trim();
-    const message = document.getElementById("message").value.trim();
+const subject=
+document.getElementById("subject").value;
 
-    // Format message (IMPORTANT: encode properly)
-    const text =
-      "Name: " +
-      name +
-      "%0A" +
-      "Email: " +
-      email +
-      "%0A" +
-      "Subject: " +
-      subject +
-      "%0A" +
-      "Message: " +
-      message;
+const message=
+document.getElementById("message").value;
 
-    // WhatsApp URL
-    const whatsappURL = `https://wa.me/918308452931?text=${text}`;
 
-    // Gmail URL
-    const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=dahanepraj2308@gmail.com&su=${encodeURIComponent(subject)}&body=${text}`;
+const text=`
 
-    // Open both
-    window.open(whatsappURL, "_blank");
-    window.open(gmailURL, "_blank");
+Name: ${name}
+Email: ${email}
 
-    // Optional: reset form
-    this.reset();
-  });
+Subject:
+${subject}
+
+Message:
+${message}
+
+`;
+
+const whatsapp=
+
+`https://wa.me/918308452931?text=${encodeURIComponent(text)}`;
+
+
+window.open(
+whatsapp,
+"_blank"
+);
+
+
+const btn=
+document.getElementById("submit-btn");
+
+btn.innerHTML=
+"Message Sent ✓";
+
+setTimeout(()=>{
+
+btn.innerHTML=`
+<span>Send Message</span>
+`;
+
+form.reset();
+
+},2500);
+
+});
+
 
 // ══════════════════════════════════════════════════
 //  CURSOR
 // ══════════════════════════════════════════════════
-const cur = document.getElementById("cur");
-const curDot = document.getElementById("cur-dot");
-let mx = 0,
-  my = 0,
-  cx = 0,
-  cy = 0;
+const cursor = document.getElementById("cur");
+const dot = document.getElementById("cur-dot");
+
 document.addEventListener("mousemove", (e) => {
-  mx = e.clientX;
-  my = e.clientY;
+  requestAnimationFrame(() => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+
+    dot.style.left = e.clientX + "px";
+    dot.style.top = e.clientY + "px";
+  });
 });
-(function moveCursor() {
-  cx += (mx - cx) * 0.14;
-  cy += (my - cy) * 0.14;
-  cur.style.left = cx + "px";
-  cur.style.top = cy + "px";
-  curDot.style.left = mx + "px";
-  curDot.style.top = my + "px";
-  requestAnimationFrame(moveCursor);
-})();
+
+document
+  .querySelectorAll("a,button,.proj,.service-cube,.skill-card,.timeline-card")
+  .forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      cursor.classList.add("active");
+    });
+
+    el.addEventListener("mouseleave", () => {
+      cursor.classList.remove("active");
+    });
+  });
 
 // ══════════════════════════════════════════════════
 //  MOBILE NAV TOGGLE
 // ══════════════════════════════════════════════════
-const navToggle = document.getElementById("navToggle");
-const navLinksEl = document.getElementById("navLinks");
-if (navToggle && navLinksEl) {
-  navToggle.addEventListener("click", () => {
-    navToggle.classList.toggle("active");
-    navLinksEl.classList.toggle("active");
-  });
 
-  // Close menu on link click
-  navLinksEl.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navToggle.classList.remove("active");
-      navLinksEl.classList.remove("active");
-    });
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+
+navToggle.addEventListener("click", () => {
+  navToggle.classList.toggle("active");
+
+  navLinks.classList.toggle("show");
+});
+
+/* close menu after click */
+
+document.querySelectorAll(".nav-links a").forEach((link) => {
+  link.addEventListener("click", () => {
+    navToggle.classList.remove("active");
+
+    navLinks.classList.remove("show");
   });
-}
+});
 
 // ══════════════════════════════════════════════════
 //  SCROLL PROGRESS
 // ══════════════════════════════════════════════════
 const prog = document.getElementById("progress");
-window.addEventListener(
-  "scroll",
-  () => {
-    prog.style.width =
-      (window.scrollY / (document.documentElement.scrollHeight - innerHeight)) *
-        100 +
-      "%";
-  },
-  { passive: true },
-);
+
+window.addEventListener("scroll", () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+
+  const sc = (window.scrollY / h) * 100;
+
+  prog.style.width = sc + "%";
+});
 
 // ══════════════════════════════════════════════════
 //  PARTICLES
 // ══════════════════════════════════════════════════
 const canvas = document.getElementById("bg-canvas");
 const ctx = canvas.getContext("2d");
-const PCOLS = ["#FF5800", "#0051A2", "#FFD500", "#009B48", "#C41E3A"];
+const PCOLS = ["#00A3FF", "#6C63FF", "#A855F7", "#00D084"];
 function resizeCanvas() {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
@@ -854,14 +619,10 @@ document.addEventListener("touchend", () => {
 // ══════════════════════════════════════════════════
 const typedEl = document.getElementById("typed");
 const words = [
-  "Frontend Developer",
-  "Full Stack Developer",
-  "UI/UX Designer",
-  "Creative Problem Solver",
-  "Data Enthusiast",
-  "Web Architect",
-  "Open Source Contributor",
-  "AI/ML Enthusiast",
+  "Building Scalable SaaS Platforms",
+  "Developing ERP & Finance Systems",
+  "Creating Fast Full Stack Applications",
+  "Designing Real-World Software Solutions",
 ];
 let wi = 0,
   ci = 0,
@@ -880,6 +641,25 @@ let wi = 0,
   }
   setTimeout(type, spd);
 })();
+
+// ═════════ SKILL BAR ANIMATION ═════════
+
+const bars = document.querySelectorAll(".bar");
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        let w = entry.target.dataset.w;
+
+        entry.target.style.width = w + "%";
+      }
+    });
+  },
+  { threshold: 0.4 },
+);
+
+bars.forEach((bar) => observer.observe(bar));
 
 // ══════════════════════════════════════════════════
 //  SCROLL ANIMATIONS
@@ -924,6 +704,93 @@ const io = new IntersectionObserver(
   { threshold: 0.18 },
 );
 document.querySelectorAll(".up, .stat").forEach((el) => io.observe(el));
+
+// TIMELINE 3D PARALLAX
+
+document.querySelectorAll(".timeline-card").forEach((card) => {
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateY = (x / rect.width - 0.5) * 10;
+    const rotateX = (y / rect.height - 0.5) * -10;
+
+    card.style.transform = `perspective(1000px)
+       rotateX(${rotateX}deg)
+       rotateY(${rotateY}deg)
+       translateY(-8px)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform =
+      "perspective(1000px) rotateX(0) rotateY(0) translateY(0)";
+  });
+});
+// TIMELINE PROGRESS
+
+const timeline = document.querySelector("#timeline");
+const progress = document.querySelector(".timeline-progress");
+
+window.addEventListener("scroll", () => {
+  const rect = timeline.getBoundingClientRect();
+
+  const start = window.innerHeight * 0.2;
+
+  const total = timeline.offsetHeight;
+
+  let value = ((start - rect.top) / total) * 100;
+
+  value = Math.max(0, Math.min(100, value));
+
+  progress.style.height = value + "%";
+});
+
+const items = document.querySelectorAll(".timeline-item");
+
+const observerr = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  },
+  { threshold: 0.4 },
+);
+
+items.forEach((item) => observer.observe(item));
+
+// PROJECT CARD 3D EFFECT
+
+document.querySelectorAll(".proj-card").forEach((card) => {
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateY = (x / rect.width - 0.5) * 12;
+    const rotateX = (y / rect.height - 0.5) * -12;
+
+    card.style.transform = `
+      perspective(1200px)
+      rotateX(${rotateX}deg)
+      rotateY(${rotateY}deg)
+      translateY(-10px)
+    `;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = `
+      perspective(1200px)
+      rotateX(0deg)
+      rotateY(0deg)
+      translateY(0px)
+    `;
+  });
+});
 
 // ══════════════════════════════════════════════════
 //  MAGNETIC BUTTONS
@@ -972,22 +839,28 @@ document.querySelectorAll(".skill-card").forEach((c) => barIO.observe(c));
 // ══════════════════════════════════════════════════
 //  NAV ACTIVE STATE
 // ══════════════════════════════════════════════════
-const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".nav-links a");
-window.addEventListener(
-  "scroll",
-  () => {
-    let cur2 = "";
-    sections.forEach((s) => {
-      if (window.scrollY >= s.offsetTop - 120) cur2 = s.id;
-    });
-    navLinks.forEach((a) =>
-      a.classList.toggle("active", a.getAttribute("href") === "#" + cur2),
-    );
-  },
-  { passive: true },
-);
+const sections = document.querySelectorAll("section");
+const navLinkss = document.querySelectorAll(".nav-links a");
 
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop - 120;
+
+    if (scrollY >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinkss.forEach((link) => {
+    link.classList.remove("active");
+
+    if (link.getAttribute("href") === `#${current}`) {
+      link.classList.add("active");
+    }
+  });
+});
 // ══════════════════════════════════════════════════
 //  EMAILJS FORM SUBMISSION
 // ══════════════════════════════════════════════════
