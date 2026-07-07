@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://prajwal-dev-portfolio.vercel.app/sitemap.xml
